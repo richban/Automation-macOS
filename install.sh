@@ -144,10 +144,10 @@ fi
 running "install SpaceVim"
 if [[ $? != 0 ]]; then
   action "installing SpaceVim..."
-  curl -sLf https://spacevim.org/install.sh | bash
-  if [[ $? != 0]]; then
-    error "unable to install SpaceVim"
-    exit 2
+    curl -sLf https://spacevim.org/install.sh | bash
+    if [[ $? != 0 ]]; then
+      error "unable to install SpaceVim"
+      exit 2
   fi
   ok "SpaceVim installed"
 fi
