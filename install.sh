@@ -142,15 +142,12 @@ fi
 #################################
 
 running "install SpaceVim"
+curl -sLf https://spacevim.org/install.sh | bash
 if [[ $? != 0 ]]; then
-  action "installing SpaceVim..."
-    curl -sLf https://spacevim.org/install.sh | bash
-    if [[ $? != 0 ]]; then
-      error "unable to install SpaceVim"
-      exit 2
-  fi
-  ok "SpaceVim installed"
+	error "unable to install SpaceVim"
+	exit 2
 fi
+  ok "SpaceVim installed"
 
 #################################
 # install homebrew (CLI Packages)
@@ -226,12 +223,12 @@ fi
 running "install oh-my-zsh"
 if [[ $? != 0 ]]; then
   action "installing oh-my-zsh..."
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" > /dev/null 2>&1
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     if [[ $? != 0]]; then
       error "unable to install oh-my-zsh"
       exit 2
   fi
-  ok "SpaceVim installed"
+  ok "oh-my-zsh installed"
 fi
 
 # set oh-my-zsh theme
