@@ -221,15 +221,13 @@ fi
 # install oh-my-zsh
 #################################
 running "install oh-my-zsh"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 if [[ $? != 0 ]]; then
-  action "installing oh-my-zsh..."
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-    if [[ $? != 0]]; then
-      error "unable to install oh-my-zsh"
-      exit 2
-  fi
-  ok "oh-my-zsh installed"
+	error "unable to install oh-my-zsh"
+	exit 2
 fi
+  ok "oh-my-zsh installed"
+
 
 # set oh-my-zsh theme
 # if [[ ! -d "./oh-my-zsh/custom/themes/powerlevel9k" ]]; then
