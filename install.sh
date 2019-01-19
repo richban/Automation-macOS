@@ -226,10 +226,10 @@ fi
 running "install oh-my-zsh"
 if [[ $? != 0 ]]; then
   action "installing oh-my-zsh..."
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" > /dev/null 2>&1
-  if [[ $? != 0]]; then
-    error "unable to install oh-my-zsh"
-    exit 2
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" > /dev/null 2>&1
+    if [[ $? != 0]]; then
+      error "unable to install oh-my-zsh"
+      exit 2
   fi
   ok "SpaceVim installed"
 fi
