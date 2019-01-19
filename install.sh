@@ -140,11 +140,15 @@ fi
 #################################
 # install SpaceVim
 #################################
-running "install SpaceVim"
 
+running "install SpaceVim"
 if [[ $? != 0 ]]; then
-  action "installing SpaceVim"
+  action "installing SpaceVim..."
   curl -sLf https://spacevim.org/install.sh | bash
+  if [[ $? != 0]]; then
+    error "unable to install SpaceVim"
+    exit 2
+  fi
   ok "SpaceVim installed"
 fi
 
@@ -219,28 +223,21 @@ fi
 #################################
 # install oh-my-zsh
 #################################
-bot "installing oh-my-zshs"
-
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+running "install oh-my-zsh"
+if [[ $? != 0 ]]; then
+  action "installing oh-my-zsh..."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" > /dev/null 2>&1
+  if [[ $? != 0]]; then
+    error "unable to install oh-my-zsh"
+    exit 2
+  fi
+  ok "SpaceVim installed"
+fi
 
 # set oh-my-zsh theme
 # if [[ ! -d "./oh-my-zsh/custom/themes/powerlevel9k" ]]; then
 #   git clone https://github.com/bhilburn/powerlevel9k.git oh-my-zsh/custom/themes/powerlevel9k
 # fi
-
-# bot "installing fonts"
-# ./fonts/install.sh
-# brew tap caskroom/fonts
-# require_cask font-fontawesome
-# require_cask font-awesome-terminal-fonts
-# require_cask font-hack
-# require_cask font-inconsolata-dz-for-powerline
-# require_cask font-inconsolata-g-for-powerline
-# require_cask font-inconsolata-for-powerline
-# require_cask font-roboto-mono
-# require_cask font-roboto-mono-for-powerline
-# require_cask font-source-code-pro
-ok
 
 if [[ -d "/Library/Ruby/Gems/2.0.0" ]]; then
   running "Fixing Ruby Gems Directory Permissions"
