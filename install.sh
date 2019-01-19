@@ -406,10 +406,10 @@ sudo pmset -a sms 0;ok
 ################################################
 
 # running "Set computer name (as done via System Preferences → Sharing)"
-# sudo scutil --set ComputerName "antic"
-# sudo scutil --set HostName "antic"
-# sudo scutil --set LocalHostName "antic"
-# sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "antic"
+sudo scutil --set ComputerName "richban-macbook"
+sudo scutil --set HostName "richban-macbook"
+sudo scutil --set LocalHostName "richban-macbook"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "richban-macbook"
 
 # running "Disable smooth scrolling"
 # (Uncomment if you’re on an older Mac that messes up the animation)
@@ -474,8 +474,8 @@ sudo pmset -a standbydelay 86400;ok
 running "Disable the sound effects on boot"
 sudo nvram SystemAudioVolume=" ";ok
 
-running "Menu bar: disable transparency"
-defaults write NSGlobalDomain AppleEnableMenuBarTransparency -bool false;ok
+# running "Menu bar: disable transparency"
+# defaults write NSGlobalDomain AppleEnableMenuBarTransparency -bool false;ok
 
 running "Menu bar: hide the Time Machine, Volume, User, and Bluetooth icons"
 for domain in ~/Library/Preferences/ByHost/com.apple.systemuiserver.*; do
@@ -546,8 +546,8 @@ sudo systemsetup -setrestartfreeze on;ok
 running "Never go into computer sleep mode"
 sudo systemsetup -setcomputersleep Off > /dev/null;ok
 
-running "Check for software updates daily, not just once per week"
-defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1;ok
+# running "Check for software updates daily, not just once per week"
+# defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1;ok
 
 # running "Disable Notification Center and remove the menu bar icon"
 # launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist > /dev/null 2>&1;ok
@@ -761,8 +761,8 @@ defaults write com.apple.dock autohide-time-modifier -float 0;ok
 running "Automatically hide and show the Dock"
 defaults write com.apple.dock autohide -bool true;ok
 
-running "Make Dock icons of hidden applications translucent"
-defaults write com.apple.dock showhidden -bool true;ok
+# running "Make Dock icons of hidden applications translucent"
+# defaults write com.apple.dock showhidden -bool true;ok
 
 running "Make Dock more transparent"
 defaults write com.apple.dock hide-mirror -bool true;ok
@@ -1023,16 +1023,6 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 
 running "Disable continuous spell checking"
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false;ok
-
-###############################################################################
-bot "SizeUp.app"
-###############################################################################
-
-running "Start SizeUp at login"
-defaults write com.irradiatedsoftware.SizeUp StartAtLogin -bool true;ok
-
-running "Don’t show the preferences window on next start"
-defaults write com.irradiatedsoftware.SizeUp ShowPrefsOnNextStart -bool false;ok
 
 killall cfprefsd
 

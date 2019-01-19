@@ -5,6 +5,7 @@ const command = require('./lib_node/command')
 
 inquirer.prompt([{
   type: 'confirm',
+  name: 'libs',
   message: 'Do you want to proceed?',
   default: false
 }]).then(function (answers) {
