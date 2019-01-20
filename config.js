@@ -50,7 +50,9 @@ module.exports = {
     // https://github.com/asdf-vm/asdf
     'asdf',
     // https://github.com/pypa/pipenv
-    'pipenv'
+    'pipenv',
+    'readline',
+    'xz'
   ],
   cask: [
     'docker', // docker for mac

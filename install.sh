@@ -40,6 +40,9 @@ fi
 running "Installing XCode"
 xcode-select --install
 
+running "Installing additional SDK headers"
+installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /
+
 #################################
 #  Create Folder Directory
 #################################
