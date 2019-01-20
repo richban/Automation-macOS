@@ -157,12 +157,16 @@ fi
 # install asdf
 #################################
 running "install asdf"
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
+if [ ! -d "$DIRECTORY" ]; then
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
+fi
+
 if [[ $? != 0 ]]; then
 error "unable to clone asdf"
 exit 2
 fi
-ok "asdf cloned"
+
+ok "asdf installed"
 
 
 # set oh-my-zsh theme
