@@ -204,8 +204,8 @@ sudo pmset -a standbydelay 86400;ok
 running "Disable the sound effects on boot"
 sudo nvram SystemAudioVolume=" ";ok
 
-running "Menu bar: disable transparency"
-defaults write NSGlobalDomain AppleEnableMenuBarTransparency -bool false;ok
+# running "Menu bar: disable transparency"
+# defaults write NSGlobalDomain AppleEnableMenuBarTransparency -bool false;ok
 
 running "Menu bar: hide the Time Machine, Volume, User, and Bluetooth icons"
 for domain in ~/Library/Preferences/ByHost/com.apple.systemuiserver.*; do
@@ -242,8 +242,8 @@ running "Expand print panel by default"
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true;ok
 
-running "Save to disk (not to iCloud) by default"
-defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false;ok
+# running "Save to disk (not to iCloud) by default"
+# defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false;ok
 
 running "Automatically quit printer app once the print jobs complete"
 defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true;ok
@@ -276,8 +276,8 @@ sudo systemsetup -setrestartfreeze on;ok
 running "Never go into computer sleep mode"
 sudo systemsetup -setcomputersleep Off > /dev/null;ok
 
-running "Check for software updates daily, not just once per week"
-defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1;ok
+# running "Check for software updates daily, not just once per week"
+# defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1;ok
 
 # running "Disable Notification Center and remove the menu bar icon"
 # launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist > /dev/null 2>&1;ok
@@ -491,8 +491,8 @@ defaults write com.apple.dock autohide-time-modifier -float 0;ok
 running "Automatically hide and show the Dock"
 defaults write com.apple.dock autohide -bool true;ok
 
-running "Make Dock icons of hidden applications translucent"
-defaults write com.apple.dock showhidden -bool true;ok
+# running "Make Dock icons of hidden applications translucent"
+# defaults write com.apple.dock showhidden -bool true;ok
 
 running "Make Dock more transparent"
 defaults write com.apple.dock hide-mirror -bool true;ok

@@ -38,7 +38,7 @@ fi
 #################################
 
 running "Installing XCode"
-xcode-select --installs
+xcode-select --install
 
 #################################
 #  Create Folder Directory
