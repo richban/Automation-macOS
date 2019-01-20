@@ -205,14 +205,37 @@ ok
 # Python
 #################################
 
-# install asdf-python plugin
+running "Installing Python and packages"
+
+action "install asdf-python plugin"
 $HOME/.asdf/bin/asdf plugin-add python https://github.com/danhper/asdf-python.git
+if [[ $? != 0 ]]; then
+  error "unable to add plugin asdf-python"
+  exit 2
+fi
 
-# install specific python version
+action "install specific python version"
 $HOME/.asdf/bin/asdf install python 3.7.2
+if [[ $? != 0 ]]; then
+  error "unable to install python 3.7.2"
+  exit 2
+fi
 
-# use python 3.7.2 as default global python
+action "use python 3.7.2 as default global python"
 $HOME/.asdf/bin/asdf global python 3.7.2
+if [[ $? != 0 ]]; then
+  error "unable to set python 3.7 as global"
+  exit 2
+fi
+
+action "install jupyter notebook"
+pip install jupyter
+if [[ $? != 0 ]]; then
+  error "unable to install Jupyter Notebook"
+  exit 2
+fi
+
+ok
 
 #################################
 # macOS bootstrap
