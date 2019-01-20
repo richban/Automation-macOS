@@ -43,7 +43,7 @@ module.exports = {
     'tree',
     // better, more recent vim
     'vim --with-override-system-vi',
-    http://osxdaily.com/2010/08/22/install-watch-command-on-os-x/
+    // http://osxdaily.com/2010/08/22/install-watch-command-on-os-x/
     'watch',
     // Install wget with IRI support
     'wget --enable-iri',
