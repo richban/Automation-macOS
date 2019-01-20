@@ -157,7 +157,7 @@ fi
 # install asdf
 #################################
 running "install asdf"
-if [ ! -d $HOME/.asdf ]; then
+if [[ ! -d $HOME/.asdf ]]; then
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
 fi
 
@@ -215,18 +215,27 @@ ok
 running "Installing Python and packages"
 
 action "install asdf-python plugin"
-$HOME/.asdf/bin/asdf plugin-add python https://github.com/danhper/asdf-python.git
+if [[ ! -d $HOME/.asdf/plugins/python ]]; then
+  $HOME/.asdf/bin/asdf plugin-add python https://github.com/danhper/asdf-python.git
+fi
+
 if [[ $? != 0 ]]; then
   error "unable to add plugin asdf-python"
   exit 2
 fi
 
-action "install specific python version"
-$HOME/.asdf/bin/asdf install python 3.7.2
+if [[ ! -d $HOME/.asdf/installs/python ]]; then
+  action "install specific python version"
+  export CONFIGURE_OPTS="--with-openssl=$(brew --prefix openssl)"
+  $HOME/.asdf/bin/asdf install python 3.7.2
+fi
+
 if [[ $? != 0 ]]; then
   error "unable to install python 3.7.2"
   exit 2
 fi
+
+ok
 
 action "use python 3.7.2 as default global python"
 $HOME/.asdf/bin/asdf global python 3.7.2
@@ -234,14 +243,6 @@ if [[ $? != 0 ]]; then
   error "unable to set python 3.7 as global"
   exit 2
 fi
-
-action "install jupyter notebook"
-pip install jupyter
-if [[ $? != 0 ]]; then
-  error "unable to install Jupyter Notebook"
-  exit 2
-fi
-
 ok
 
 #################################
