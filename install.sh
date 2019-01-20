@@ -121,9 +121,6 @@ ok
 # skip those GUI clients, git command-line all the way
 require_brew git
 
-# need fontconfig to install/build fonts
-require_brew fontconfig
-
 # update zsh to latest
 require_brew zsh
 
@@ -152,6 +149,17 @@ if [[ $? != 0 ]]; then
 	exit 2
 fi
   ok "oh-my-zsh installed"
+
+#################################
+# install asdf
+#################################
+running "install asdf"
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
+if [[ $? != 0 ]]; then
+error "unable to clone asdf"
+exit 2
+fi
+ok "asdf cloned"
 
 
 # set oh-my-zsh theme
@@ -194,7 +202,19 @@ brew cleanup > /dev/null 2>&1
 ok
 
 #################################
-# macOS bootstrap
+# Python
 #################################
 
+# install asdf-python plugin
+$HOME/.asdf/bin/asdf plugin-add python https://github.com/danhper/asdf-python.git
+
+# install specific python version
+$HOME/.asdf/bin/asdf install python 3.7.2
+
+# use python 3.7.2 as default global python
+$HOME/.asdf/bin/asdf global python 3.7.2
+
+#################################
+# macOS bootstrap
+#################################
 source ./macOS-bootstrap.sh

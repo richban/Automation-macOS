@@ -48,7 +48,9 @@ module.exports = {
     // Install wget with IRI support
     'wget --enable-iri',
     // https://github.com/asdf-vm/asdf
-    'asdf'
+    'asdf',
+    // https://github.com/pypa/pipenv
+    'pipenv'
   ],
   cask: [
     'docker', // docker for mac
