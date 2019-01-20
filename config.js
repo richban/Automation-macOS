@@ -11,12 +11,10 @@ module.exports = {
     'dos2unix',
     // Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed
     'findutils',
-    // 'fortune',
+    // https://github.com/junegunn/fzf,
     'fzf',
     'readline', // ensure gawk gets good readline
     'gawk',
-    // http://www.lcdf.org/gifsicle/ (because I'm a gif junky)
-    'gifsicle',
     'gnupg',
     // Install GNU `sed`, overwriting the built-in `sed`
     // so we can do "sed -i 's/foo/bar/' file" instead of "sed -i '' 's/foo/bar/' file"
@@ -27,7 +25,7 @@ module.exports = {
     'homebrew/dupes/grep',
     // https://github.com/jkbrzt/httpie
     'httpie',
-    // jq is a sort of JSON grep
+    // https://stedolan.github.io/jq/
     'jq',
     // Mac App Store CLI: https://github.com/mas-cli/mas
     'mas',
@@ -39,15 +37,17 @@ module.exports = {
     // better/more recent version of screen
     'homebrew/dupes/screen',
     'tmux',
+    // https://github.com/todotxt/todo.txt-cli
     'todo-txt',
+    // http://mama.indstate.edu/users/ice/tree/
     'tree',
-    'ttyrec',
     // better, more recent vim
     'vim --with-override-system-vi',
+    http://osxdaily.com/2010/08/22/install-watch-command-on-os-x/
     'watch',
     // Install wget with IRI support
     'wget --enable-iri',
-    // extendable version manager
+    // https://github.com/asdf-vm/asdf
     'asdf'
   ],
   cask: [
