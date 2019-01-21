@@ -166,6 +166,13 @@ fi
   ok "oh-my-zsh installed"
 
 #################################
+# install nvm
+#################################
+running "install nvm"
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+
+
+#################################
 # install asdf
 #################################
 running "install asdf"
@@ -221,6 +228,27 @@ ok
 running "cleanup homebrew"
 brew cleanup > /dev/null 2>&1
 ok
+
+
+#################################
+# MySQL
+#################################
+
+running "linking mysql and starting services"
+brew link --force mysql@5.7
+brew services start mysql@5.7
+ok
+
+running "starting redis"
+# Start Redis
+brew services start redis
+ok
+
+#################################
+# nodemon
+#################################
+
+npm install -g nodemon
 
 #################################
 # Python

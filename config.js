@@ -52,7 +52,10 @@ module.exports = {
     // https://github.com/pypa/pipenv
     'pipenv',
     'readline',
-    'xz'
+    'xz',
+    'mysql@5.7,
+    'sqlite',
+    'redis'
   ],
   cask: [
     'docker', // docker for mac
