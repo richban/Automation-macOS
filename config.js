@@ -53,9 +53,11 @@ module.exports = {
     'pipenv',
     'readline',
     'xz',
-    'mysql@5.7,
+    'mysql@5.7',
     'sqlite',
-    'redis'
+    'redis',
+    'pipenv',
+    'graphviz'
   ],
   cask: [
     'docker', // docker for mac
