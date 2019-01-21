@@ -73,7 +73,8 @@ module.exports = {
     'spotify',
     'textmate',
     'sequel-pro',
-    'insomnia'
+    'insomnia',
+    'mactex'
   ],
   gem: [
   ],

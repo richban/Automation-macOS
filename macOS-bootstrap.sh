@@ -387,7 +387,7 @@ if [[ $res =~ (yes|y|Y) ]];then
   # defaults write com.apple.finder AppleShowAllFiles -bool true;ok
 
   running "Show all filename extensions"
-  defaults write NSGlobalDomain AppleShowAllExtensions -bool true;ok
+  defaults write NSGlobalDomain AppleShowAllExtensions -bool false;ok
 
   # running "Show status bar"
   # defaults write com.apple.finder ShowStatusBar -bool true;ok
