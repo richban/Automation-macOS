@@ -231,6 +231,22 @@ ok
 
 
 #################################
+# VREP EDU 
+#################################
+running "installing VREP"
+
+action "downloading VREP-EDU"
+cd $HOME/Developer/
+curl http://coppeliarobotics.com/files/V-REP_PRO_EDU_V3_5_0_Mac.zip --output vrep-edu.zip
+
+action "unzipping vrep & cleaning up"
+unzip vrep-edu.zip -x '__MACOSX/*' > /dev/null 2>&1
+mv V-REP_PRO_EDU_V3_5_0_Mac vrep-edu
+rm vrep-edu.zip
+
+ok
+
+#################################
 # MySQL
 #################################
 
@@ -247,7 +263,7 @@ ok
 #################################
 # nodemon
 #################################
-
+action "installing nodemon"
 npm install -g nodemon
 
 #################################
