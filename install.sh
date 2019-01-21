@@ -66,6 +66,18 @@ if [[ $response =~ (yes|y|Y) ]];then
 fi
 
 #################################
+# install powerline fonts
+#################################
+
+running "installing powerline fonts"
+git clone https://github.com/powerline/fonts.git --depth=1
+cd fonts
+./install.sh
+cd ..
+rm -rf fonts
+ok
+
+#################################
 # install SpaceVim
 #################################
 
@@ -159,6 +171,8 @@ fi
 running "install asdf"
 if [[ ! -d $HOME/.asdf ]]; then
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
+  echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.zshrc
+  echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.zshrc
 fi
 
 if [[ $? != 0 ]]; then
