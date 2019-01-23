@@ -42,7 +42,7 @@ module.exports = {
     // http://mama.indstate.edu/users/ice/tree/
     'tree',
     // better, more recent vim
-    'vim --with-override-system-vi',
+    'vim --with-override-system-vi ----with-client-server',
     // http://osxdaily.com/2010/08/22/install-watch-command-on-os-x/
     'watch',
     // Install wget with IRI support
@@ -57,7 +57,8 @@ module.exports = {
     'sqlite',
     'redis',
     'pipenv',
-    'graphviz'
+    'graphviz',
+    'yarn'
   ],
   cask: [
     'docker', // docker for mac

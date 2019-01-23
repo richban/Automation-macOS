@@ -520,17 +520,17 @@ if [[ $res =~ (yes|y|Y) ]];then
   # 11: Launchpad
   # 12: Notification Center
 
-  running "Top left screen corner → Mission Control"
-  defaults write com.apple.dock wvous-tl-corner -int 2
-  defaults write com.apple.dock wvous-tl-modifier -int 0;ok
+  # running "Top left screen corner → Mission Controll"
+  # defaults write com.apple.dock wvous-tl-corner -int 2
+  # defaults write com.apple.dock wvous-tl-modifier -int 0;ok
 
-  running "Top right screen corner → Desktop"
-  defaults write com.apple.dock wvous-tr-corner -int 4
-  defaults write com.apple.dock wvous-tr-modifier -int 0;ok
+  # running "Top right screen corner → Desktop"
+  # defaults write com.apple.dock wvous-tr-corner -int 4
+  # defaults write com.apple.dock wvous-tr-modifier -int 0;ok
 
-  running "Bottom right screen corner → Start screen saver"
-  defaults write com.apple.dock wvous-br-corner -int 5
-  defaults write com.apple.dock wvous-br-modifier -int 0;ok
+  # running "Bottom right screen corner → Start screen saver"
+  # defaults write com.apple.dock wvous-br-corner -int 5
+  # defaults write com.apple.dock wvous-br-modifier -int 0;ok
 
   ###############################################################################
   bot "Configuring Safari & WebKit"
@@ -760,16 +760,6 @@ if [[ $res =~ (yes|y|Y) ]];then
 
   running "Disable continuous spell checking"
   defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false;ok
-
-  ###############################################################################
-  bot "SizeUp.app"
-  ###############################################################################
-
-  running "Start SizeUp at login"
-  defaults write com.irradiatedsoftware.SizeUp StartAtLogin -bool true;ok
-
-  running "Don’t show the preferences window on next start"
-  defaults write com.irradiatedsoftware.SizeUp ShowPrefsOnNextStart -bool false;ok
 
   killall cfprefsd
 
