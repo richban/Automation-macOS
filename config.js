@@ -64,8 +64,6 @@ module.exports = {
     'docker', // docker for mac
     'google-backup-and-sync',
     'google-chrome',
-    'dropbox',
-    'evernote',
     'iterm2',
     'slack',
     'the-unarchiver',
