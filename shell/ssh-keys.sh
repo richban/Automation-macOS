@@ -60,27 +60,3 @@ if [[ -n "$HOST" ]]; then
     copy-key 'pi' "$HOST"
     copy-key 'root' "$HOST"
 fi
-
-#####################################################
-#
-#               Git remotes management
-#
-#####################################################
-
-# By passing this directory to the next git commands, this script can be
-# called from anywhere
-PARENT_DIR="$(dirname "${BASH_SOURCE[0]}")"
-
-GIT_ORIGIN="$(git -C "$PARENT_DIR" remote get-url origin)"
-
-# If remote origin is https, thus not ssh
-if grep 'https' <<<"$GIT_ORIGIN" &> /dev/null; then
-    echo 'Copy the key to your git hosting service'
-    cat "$SSH_HOME/id_rsa.pub"
-    read
-
-    # Changing this repository URL to use SSH
-    sed -E 's|https://(.+?)/(.+?)/(.+?).git|git@\1:\2/\3.git|' \
-            <<<"$GIT_ORIGIN" \
-        | xargs git -C "$PARENT_DIR" remote set-url origin
-fi

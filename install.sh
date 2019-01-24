@@ -267,6 +267,13 @@ action "installing nodemon"
 npm install -g nodemon
 
 #################################
+# TMUX
+#################################
+running "cloning tmux manager"
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+ok
+
+#################################
 # Python
 #################################
 
