@@ -190,11 +190,6 @@ fi
 ok "asdf installed"
 
 
-# set oh-my-zsh theme
-# if [[ ! -d "./oh-my-zsh/custom/themes/powerlevel9k" ]]; then
-#   git clone https://github.com/bhilburn/powerlevel9k.git oh-my-zsh/custom/themes/powerlevel9k
-# fi
-
 if [[ -d "/Library/Ruby/Gems/2.0.0" ]]; then
   running "Fixing Ruby Gems Directory Permissions"
   sudo chown -R $(whoami) /Library/Ruby/Gems/2.0.0
