@@ -299,7 +299,6 @@ if [[ $? != 0 ]]; then
   error "unable to install python 3.7.2"
   exit 2
 fi
-
 ok
 
 action "use python 3.7.2 as default global python"
@@ -311,6 +310,35 @@ fi
 ok
 
 #################################
-# macOS bootstrap
+# ssh-keys 
+#################################:w
+
+read -r -p "Do you want me to set up new ssh-keys for this machine? " response
+if [[ $response =~ (yes|y|Y) ]];then
+    bot "Generatinng new ssh-keys"
+    source shell/ssh-keys.sh
+    action "adding keys to keychain"
+    ssh-add -K
+    ok
+fi
+
 #################################
+# dotfiles 
+#################################:w
+
+read -r -p "Do you want me to install dotfiles?? " response
+if [[ $response =~ (yes|y|Y) ]];then
+    bot "Installing dotfiles"
+    git clone --recursive git@github.com:richban/dotfiles.git $HOME/Developer/dotfiles
+   	cd $HOME/Developer/dotfiles
+	action "installing dotdrop manager"
+	pip3 install --user -r ./dotdrop/requirements.txt
+	action "installing dotfiles"
+	./dotdrop.sh install
+	ok
+fi
+
+#################################
+# macOS bootstrap
+#################################:w
 source ./macOS-bootstrap.sh
