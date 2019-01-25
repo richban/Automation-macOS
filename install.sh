@@ -10,6 +10,8 @@
 source ./shell/echos.sh
 source ./shell/requirers.sh
 
+CURRENT_DIR="$PWD"
+
 bot "Hi! I'm going to install tooling and tweak your system settings. Here I go..."
 
 # Ask for the administrator password upfront
@@ -314,7 +316,7 @@ ok
 read -r -p "Do you want me to set up new ssh-keys for this machine? " response
 if [[ $response =~ (yes|y|Y) ]];then
     bot "Generatinng new ssh-keys"
-    source ./shell/ssh-keys.sh
+    . "$CURRENT_DIR/shell/ssh-keys.sh"
     action "adding keys to keychain"
     ssh-add -K
     ok
@@ -322,32 +324,33 @@ fi
 
 #################################
 # dotfiles 
-#################################:w
+#################################
 
-read -r -p "Do you want me to install dotfiles?" response
+read -r -p "Do you want me to install dotfiles? [y|N]" response
 if [[ $response =~ (yes|y|Y) ]];then
     bot "Installing dotfiles"
     git clone --recursive git@github.com:richban/dotfiles.git $HOME/Developer/dotfiles
-   	cd $HOME/Developer/dotfiles
-	action "installing dotdrop manager"
-	pip3 install --user -r ./dotdrop/requirements.txt
-	action "installing dotfiles"
-	./dotdrop.sh install
-	ok
+    cd $HOME/Developer/dotfiles
+    action "installing dotdrop manager"
+    pip3 install --user -r ./dotdrop/requirements.txt
+    action "installing dotfiles"
+    read -r -p "Which profile wish you to install?" profile
+    ./dotdrop.sh install --profile=$profile
+    ok
 fi
 
 #################################
 # github repositories 
-#################################:w
+#################################
 
-read -r -p "Do you want me to clone your repositories?" response
+read -r -p "Do you want me to clone your repositories? [y|N]" response
 if [[ $response =~ (yes|y|Y) ]];then
-	action "Cloning repos...."
-    source ./shell/clone_repos.sh
+    action "Cloning repos...."
+    . "$CURRENT_DIR/shell/clone_repos.sh"
     ok
 fi
 
 #################################
 # macOS bootstrap
 #################################
-source ./macOS-bootstrap.sh
+. "$CURRENT_DIR/macOS-bootstrap.sh"
