@@ -84,6 +84,8 @@ if [[ $res =~ (yes|y|Y) ]];then
 
   # Disable guest account login
   sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool false
+  sudo defaults write /Library/Preferences/com.apple.AppleFileServer guestAccess -bool NO
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess -bool NO
 
   # Automatically lock the login keychain for inactivity after 6 hours
   # security set-keychain-settings -t 21600 -l ~/Library/Keychains/login.keychain
