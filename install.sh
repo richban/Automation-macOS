@@ -246,7 +246,9 @@ ok
 #################################
 
 running "linking mysql and starting services"
+action "Staring mysql and redis"
 brew link --force mysql@5.7
+brew tap homebrew/services
 brew services start mysql@5.7
 ok
 
@@ -311,7 +313,7 @@ ok
 read -r -p "Do you want me to set up new ssh-keys for this machine? " response
 if [[ $response =~ (yes|y|Y) ]];then
     bot "Generatinng new ssh-keys"
-    source shell/ssh-keys.sh
+    source ./shell/ssh-keys.sh
     action "adding keys to keychain"
     ssh-add -K
     ok
@@ -335,5 +337,5 @@ fi
 
 #################################
 # macOS bootstrap
-#################################:w
+#################################
 source ./macOS-bootstrap.sh
