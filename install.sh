@@ -84,7 +84,7 @@ ok
 # install SpaceVim
 #################################
 
-running "install SpaceVim"
+running "installing SpaceVim"
 curl -sLf https://spacevim.org/install.sh | bash
 if [[ $? != 0 ]]; then
 	error "unable to install SpaceVim"
@@ -160,7 +160,7 @@ fi
 #################################
 # install oh-my-zsh
 #################################
-running "install oh-my-zsh"
+running "installing oh-my-zsh"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" > /dev/null 2>&1
 if [[ $? != 0 ]]; then
 	error "unable to install oh-my-zsh"
@@ -171,14 +171,14 @@ fi
 #################################
 # install nvm
 #################################
-running "install nvm"
+running "installing nvm"
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
 
 
 #################################
 # install asdf
 #################################
-running "install asdf"
+running "installing asdf"
 if [[ ! -d $HOME/.asdf ]]; then
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
   echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.zshrc
@@ -313,7 +313,7 @@ ok
 # ssh-keys 
 #################################:w
 
-read -r -p "Do you want me to set up new ssh-keys for this machine? " response
+read -r -p "Do you want me to set up new ssh-keys for this machine? [y|N] " response
 if [[ $response =~ (yes|y|Y) ]];then
     bot "Generatinng new ssh-keys"
     . "$CURRENT_DIR/shell/ssh-keys.sh"
@@ -326,7 +326,7 @@ fi
 # dotfiles 
 #################################
 
-read -r -p "Do you want me to install dotfiles? [y|N]" response
+read -r -p "Do you want me to install dotfiles? [y|N] " response
 if [[ $response =~ (yes|y|Y) ]];then
     bot "Installing dotfiles"
     git clone --recursive git@github.com:richban/dotfiles.git $HOME/Developer/dotfiles
@@ -343,10 +343,27 @@ fi
 # github repositories 
 #################################
 
-read -r -p "Do you want me to clone your repositories? [y|N]" response
+read -r -p "Do you want me to clone your repositories? [y|N] " response
 if [[ $response =~ (yes|y|Y) ]];then
     action "Cloning repos...."
     . "$CURRENT_DIR/shell/clone_repos.sh"
+    ok
+fi
+
+#################################
+# Change Host name
+#################################
+running "Do you want to change the hostname and computer name? [y|N] " response
+if [[ $response =~ (yes|y|Y) ]];then
+	action "changing hostname and computer name"
+    read -r -p "Type the new <hostname>" hostname
+	sudo scutil --set HostName hostname
+	read -r -p "Type the new local <hostname>" localhostname
+	sudo scutil --set LocalHostName localhostname
+	read -r -p "Type the new computer <name>" computername
+	sudo scutil --set ComputerName computername
+	action "flushing DNS cache"
+	dscacheutil -flushcache
     ok
 fi
 
