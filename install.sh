@@ -3,6 +3,7 @@
 ###########################
 # This script installs the dotfiles and runs all other system configuration scripts
 # @author Adam Eivy
+# @customized Richard Banyi
 ###########################
 
 # include my library helpers for colorized echo and require_brew, etc
@@ -323,7 +324,7 @@ fi
 # dotfiles 
 #################################:w
 
-read -r -p "Do you want me to install dotfiles?? " response
+read -r -p "Do you want me to install dotfiles?" response
 if [[ $response =~ (yes|y|Y) ]];then
     bot "Installing dotfiles"
     git clone --recursive git@github.com:richban/dotfiles.git $HOME/Developer/dotfiles
@@ -333,6 +334,17 @@ if [[ $response =~ (yes|y|Y) ]];then
 	action "installing dotfiles"
 	./dotdrop.sh install
 	ok
+fi
+
+#################################
+# github repositories 
+#################################:w
+
+read -r -p "Do you want me to clone your repositories?" response
+if [[ $response =~ (yes|y|Y) ]];then
+	action "Cloning repos...."
+    source ./shell/clone_repos.sh
+    ok
 fi
 
 #################################
