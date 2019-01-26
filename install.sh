@@ -353,6 +353,7 @@ fi
 #################################
 # Change Host name
 #################################
+
 running "Do you want to change the hostname and computer name? [y|N] " response
 if [[ $response =~ (yes|y|Y) ]];then
 	action "changing hostname and computer name"
@@ -367,7 +368,15 @@ if [[ $response =~ (yes|y|Y) ]];then
     ok
 fi
 
+
+#################################
+# VSCODE
+#################################
+
+. "$CURRENT_DIR/shell/vscode.sh"
+
 #################################
 # macOS bootstrap
 #################################
+
 . "$CURRENT_DIR/macOS-bootstrap.sh"
