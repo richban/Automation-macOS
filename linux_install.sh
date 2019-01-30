@@ -18,81 +18,79 @@ CURRENT_DIR="$PWD"
 
 bot "Hi! I'm going to install tooling and tweak your system settings. Here I go..."
 
-#####################################################
-#
-#                   Privileges
-#
-#####################################################
 
-# Checking for root privileges: if don't
-# have them, recalling this script with sudo
-if [[ $EUID -ne 0 ]]; then
-  echo 'This script needs to be run as root'
-  sudo bash "$0" "$@"
-  exit 0
+read -r -p "Do you set up linux? [y|N] " response
+
+if [[ $response =~ (yes|y|Y) ]];then
+
+	#####################################################
+	#
+	#               Clean & upgrade
+	#
+	#####################################################
+
+	action "updating ubuntu"
+	sudo apt-get update > /dev/null 2>&1
+	sudo apt-get upgrade > /dev/null 2>&1
+	ok
+	#####################################################
+	#
+	#           Installing packages
+	#
+	#####################################################
+
+	action "installing packages"
+	sudo apt install python python3 python-pip pithon3-pip python-gtk2 vim git \
+	  make build-essential libssl-dev zlib1g-dev libbz2-dev \
+	  libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
+	  xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev curl python-dbus > /dev/null 2>&1
+
+	[[ $? -ne 0 ]] && exit 1
+	ok
+
+	action "installing packages II"
+	sudo apt-get install qttools5-dev-tools \
+			     qttools5-dev \
+			     qtbase5-dev \
+			     qt5-qmake \
+			     libqt5help5 \
+			     libqt5opengl5-dev \
+			     libqt5svg5-dev \
+			     libqt5x11extras5-dev \
+			     libqwt-qt5-dev \
+			     libcairo2-dev \
+			     libudev-dev \
+			     libxml2-dev \
+			     libsdl2-dev \
+			     libavahi-compat-libdnssd-dev \
+			     python-dev \
+			     libboost-python-dev \
+			     doxygen \
+			     cmake \
+			     g++ \
+			     git \
+			     make \
+			     autoconf \
+			     libreadline-dev \
+			     libncurses-dev \
+			     libssl-dev \
+			     libyaml-dev \
+			     libxslt-dev \
+			     libffi-dev \
+			     libtool \
+			     unixodbc-dev \
+			     linuxbrew-wrapper \
+			     tmux \
+			     zsh > /dev/null 2>&1
+	[[ $? -ne 0 ]] && exit 1
+	ok
 fi
 
-#####################################################
-#
-#               Clean & upgrade
-#
-#####################################################
-
-# Updating
-apt-get update
-apt-get upgrade
-
-#####################################################
-#
-#           Installing packages
-#
-#####################################################
-
-apt install python python3 python-pip python-gtk2 vim git \
-  make build-essential libssl-dev zlib1g-dev libbz2-dev \
-  libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
-  xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev curl python-dbus
-[[ $? -ne 0 ]] && exit 1
-
-sudo apt-get install qttools5-dev-tools \
-                     qttools5-dev \
-                     qtbase5-dev \
-                     qt5-qmake \
-                     libqt5help5 \
-                     libqt5opengl5-dev \
-                     libqt5svg5-dev \
-                     libqt5x11extras5-dev \
-                     libqwt-qt5-dev \
-                     libcairo2-dev \
-                     libudev-dev \
-                     libxml2-dev \
-                     libsdl2-dev \
-                     libavahi-compat-libdnssd-dev \
-                     python-dev \
-                     libboost-python-dev \
-                     doxygen \
-                     cmake \
-                     g++ \
-                     git \
-                     make \
-                     autoconf \
-                     libreadline-dev \
-                     libncurses-dev \
-                     libssl-dev \
-                     libyaml-dev \
-                     libxslt-dev \
-                     libffi-dev \
-                     libtool \
-                     unixodbc-dev \
-                     tmux \
-                     zsh
-[[ $? -ne 0 ]] && exit 1
-
-
 # User permissions
-usermod -a -G dialout $USER
-newgrp dialout
+sudo usermod -a -G dialout $USER
+sudo newgrp dialout
 
+action "make sudo passwordless"
 # Ask for the administrator password upfront
 if ! sudo grep -q "%wheel		ALL=(ALL) NOPASSWD: ALL #atomantic/dotfiles" "/etc/sudoers"; then
 
@@ -142,26 +140,20 @@ fi
 #################################
 
 running "installing SpaceVim"
-curl -sLf https://spacevim.org/install.sh | bash
+curl -sLf https://spacevim.org/install.sh | sudo bash
 if [[ $? != 0 ]]; then
 	error "unable to install SpaceVim"
 	exit 2
 fi
-  ok "SpaceVim installed"
+ok "SpaceVim installed"
 
 #####################################################
 #
 #                   Linux Brew
 #
 #####################################################
-
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)" > /dev/null 2>&1
-
-test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >> ~/.bash_profile
-echo "eval \$($(brew --prefix)/bin/brew shellenv)" >> ~/.profile
-
+action "installing brew"
+brew > /dev/null 2>&1
 
 #################################
 # install oh-my-zsh
@@ -224,20 +216,18 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ok
 
 #################################
-# ssh-keys 
+# ssh-keys
 #################################:w
 
 read -r -p "Do you want me to set up new ssh-keys for this machine? [y|N] " response
 if [[ $response =~ (yes|y|Y) ]];then
-    bot "Generatinng new ssh-keys"
+    action "Generatinng new ssh-keys"
     . "$CURRENT_DIR/shell/ssh-keys.sh"
-    action "adding keys to keychain"
-    ssh-add -K
     ok
 fi
 
 #################################
-# github repositories 
+# github repositories
 #################################
 
 read -r -p "Do you want me to clone your repositories? [y|N] " response
@@ -248,36 +238,35 @@ if [[ $response =~ (yes|y|Y) ]];then
 fi
 
 #################################
-# Change Host name
+# dotfiles
 #################################
 
-running "Do you want to change the hostname and computer name? [y|N] " response
+read -r -p "Do you want me to install dotfiles? [y|N] " response
 if [[ $response =~ (yes|y|Y) ]];then
-	action "changing hostname and computer name"
-    read -r -p "Type the new <hostname>" hostname
-	sudo scutil --set HostName hostname
-	read -r -p "Type the new local <hostname>" localhostname
-	sudo scutil --set LocalHostName localhostname
-	read -r -p "Type the new computer <name>" computername
-	sudo scutil --set ComputerName computername
-	action "flushing DNS cache"
-	dscacheutil -flushcache
+    bot "Installing dotfiles"
+    git clone --recursive git@github.com:richban/dotfiles.git $HOME/Developer/dotfiles
+    cd $HOME/Developer/dotfiles
+    action "installing dotdrop manager"
+    pip3 install --user -r ./dotdrop/requirements.txt
+    action "installing dotfiles"
+    read -r -p "Which profile wish you to install?" profile
+    ./dotdrop.sh install --profile=$profile
     ok
 fi
 
 #################################
-# VREP EDU 
+# VREP EDU
 #################################
 running "installing VREP"
 action "downloading VREP-EDU"
-cd $HOME/Developer/
-curl http://coppeliarobotics.com/files/V-REP_PRO_EDU_V3_5_0_Mac.zip --output vrep-edu.zip
-
-action "unzipping vrep & cleaning up"
-unzip vrep-edu.zip > /dev/null 2>&1
-mv V-REP_PRO_EDU_V3_5_0_Mac vrep-edu
-rm vrep-edu.zip
-ok
+if [[ ! -d $HOME/Developer/vrep-edu ]]; then
+	cd $HOME/Developer/
+	curl http://coppeliarobotics.com/files/V-REP_PRO_EDU_V3_5_0_Linux.tar.gz --output vrep.tar.gz
+	tar xzf vrep.tar.gz > /dev/null 2>&1
+	mv V-REP_PRO_EDU_V3_5_0_Linux vrep-edu
+	rm vrep.tar.gz
+	ok
+fi
 
 #####################################################
 #
@@ -285,19 +274,30 @@ ok
 #
 #####################################################
 
-
-if [[ ! -d $HOME/Developer ]]; then
-    cd ~/ && mkdir ~/Developer && cd developer
-    git clone --recursive https://github.com/aseba-community/aseba.git
+action "installing aseba"
+if [[ ! -d $HOME/Developer/aseba ]]; then
+    cd ~/Developer
+    git clone --recursive https://github.com/aseba-community/aseba.git > /dev/null 2>&1
     cd aseba
     # Building Aseba
     mkdir build && cd build
-    cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="<path of qt>;<path of bonjour>" ..
+    cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF ..
     make
+    ok
 fi
+
+#####################################################
+#
+#                   Install  Atom
+#
+#####################################################
+sudo add-apt-repository ppa:webupd8team/atom
+sudo apt update; sudo apt install atom
+sudo apt remove --purge atom
 
 # set zsh as default terminal
 chsh -s $(which zsh)
 
-bot "Woot! All done. Kill this terminal and launch iTerm"
-
+bot "Woot! All done. Machine will reboot in 5 sec."
+sleep 5
+sudo shutdown -r 0
