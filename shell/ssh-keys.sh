@@ -21,4 +21,5 @@ SSH_HOME="$HOME/.ssh"
 #####################################################
 
 mkdir -p "$SSH_HOME"
-[[ ! -f "$SSH_HOME/id_rsa" ]] && ssh-keygen -t rsa
+[[ ! -f "$SSH_HOME/id_rsa" ]] && ssh-keygen -t rsa -b 4096 -C "rbanyi@me.com"
+ssh-add ~/.ssh/id_rsa

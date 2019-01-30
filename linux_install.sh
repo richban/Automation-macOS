@@ -30,8 +30,8 @@ if [[ $response =~ (yes|y|Y) ]];then
 	#####################################################
 
 	action "updating ubuntu"
-	sudo apt-get update > /dev/null 2>&1
-	sudo apt-get upgrade > /dev/null 2>&1
+	sudo apt-get -y update > /dev/null 2>&1
+	sudo apt-get -y upgrade > /dev/null 2>&1
 	ok
 	#####################################################
 	#
@@ -40,7 +40,7 @@ if [[ $response =~ (yes|y|Y) ]];then
 	#####################################################
 
 	action "installing packages"
-	sudo apt install python python3 python-pip pithon3-pip python-gtk2 vim git \
+	sudo apt -y install python python3 python-pip python3-pip python-gtk2 vim git \
 	  make build-essential libssl-dev zlib1g-dev libbz2-dev \
 	  libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
 	  xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev curl python-dbus > /dev/null 2>&1
@@ -49,7 +49,7 @@ if [[ $response =~ (yes|y|Y) ]];then
 	ok
 
 	action "installing packages II"
-	sudo apt-get install qttools5-dev-tools \
+	sudo apt-get -y install qttools5-dev-tools \
 			     qttools5-dev \
 			     qtbase5-dev \
 			     qt5-qmake \
@@ -86,9 +86,6 @@ if [[ $response =~ (yes|y|Y) ]];then
 	ok
 fi
 
-# User permissions
-sudo usermod -a -G dialout $USER
-sudo newgrp dialout
 
 action "make sudo passwordless"
 # Ask for the administrator password upfront
@@ -111,13 +108,14 @@ if ! sudo grep -q "%wheel		ALL=(ALL) NOPASSWD: ALL #atomantic/dotfiles" "/etc/su
       sudo dscl . append /Groups/wheel GroupMembership $(whoami)
       bot "You can now run sudo commands without password!"
   fi
+	ok
 fi
 
 #################################
 #  Create Folder Directory
 #################################
 
-bot "Create Developer folder in HOME directory"
+bot "Creating Developer folder in HOME directory"
 mkdir -p ~/Developer
 
 #################################
@@ -131,8 +129,8 @@ if [[ $response =~ (yes|y|Y) ]];then
     ok
     action "cp ./configs/hosts /etc/hosts"
     sudo cp ./configs/hosts /etc/hosts
-    ok
     bot "Your /etc/hosts file has been updated. Last version is saved in /etc/hosts.backup"
+		ok
 fi
 
 #################################
@@ -140,7 +138,7 @@ fi
 #################################
 
 running "installing SpaceVim"
-curl -sLf https://spacevim.org/install.sh | sudo bash
+curl -sLf https://spacevim.org/install.sh | bash
 if [[ $? != 0 ]]; then
 	error "unable to install SpaceVim"
 	exit 2
@@ -154,6 +152,7 @@ ok "SpaceVim installed"
 #####################################################
 action "installing brew"
 brew > /dev/null 2>&1
+ok "brew installed"
 
 #################################
 # install oh-my-zsh
@@ -172,6 +171,7 @@ fi
 #################################
 
 if [[ ! -d $HOME/.asdf ]]; then
+	action "installing .asdf"
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
   echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bashrc
   echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.basrc
@@ -180,6 +180,8 @@ fi
 if [[ $? != 0 ]]; then
 exit 2
 fi
+ok "asdf installed"
+
 
 #####################################################
 #
@@ -187,6 +189,8 @@ fi
 #
 #####################################################
 
+
+action "installing python plugin"
 if [[ ! -d $HOME/.asdf/plugins/python ]]; then
   $HOME/.asdf/bin/asdf plugin-add python https://github.com/danhper/asdf-python.git
 fi
@@ -195,6 +199,9 @@ if [[ $? != 0 ]]; then
   exit 2
 fi
 
+ok "python plugin succesfully added"
+
+action "installing python 3.7.2"
 if [[ ! -d $HOME/.asdf/installs/python ]]; then
   $HOME/.asdf/bin/asdf install python 3.7.2
 fi
@@ -203,10 +210,14 @@ if [[ $? != 0 ]]; then
   exit 2
 fi
 
+ok "python 3.7.2 succesfully installed"
+
 $HOME/.asdf/bin/asdf global python 3.7.2
 if [[ $? != 0 ]]; then
   exit 2
 fi
+
+ok "python configuration installed"
 
 #################################
 # TMUX
@@ -247,7 +258,7 @@ if [[ $response =~ (yes|y|Y) ]];then
     git clone --recursive git@github.com:richban/dotfiles.git $HOME/Developer/dotfiles
     cd $HOME/Developer/dotfiles
     action "installing dotdrop manager"
-    pip3 install --user -r ./dotdrop/requirements.txt
+    pip3 install --user -r $HOME/Developer/dotfiles/dotdrop/requirements.txt
     action "installing dotfiles"
     read -r -p "Which profile wish you to install?" profile
     ./dotdrop.sh install --profile=$profile
@@ -291,13 +302,21 @@ fi
 #                   Install  Atom
 #
 #####################################################
-sudo add-apt-repository ppa:webupd8team/atom
-sudo apt update; sudo apt install atom
-sudo apt remove --purge atom
+
+# action "installing atom"
+# sudo add-apt-repository -y ppa:webupd8team/atom
+# sudo apt -y update; sudo apt -y install atom
+# sudo apt -y remove --purge atom
+# ok
+
+# User permissions
+# sudo usermod -a -G dialout $USER
+# sudo newgrp dialout
 
 # set zsh as default terminal
 chsh -s $(which zsh)
 
 bot "Woot! All done. Machine will reboot in 5 sec."
+
 sleep 5
 sudo shutdown -r 0
