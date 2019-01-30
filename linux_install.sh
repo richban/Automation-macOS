@@ -63,6 +63,7 @@ if [[ $response =~ (yes|y|Y) ]];then
 			     libxml2-dev \
 			     libsdl2-dev \
 			     libavahi-compat-libdnssd-dev \
+           libgirepository1.0-dev \
 			     python-dev \
 			     libboost-python-dev \
 			     doxygen \
