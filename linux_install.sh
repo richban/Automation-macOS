@@ -174,7 +174,7 @@ if [[ ! -d $HOME/.asdf ]]; then
 	action "installing .asdf"
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
   echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bashrc
-  echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.basrc
+  echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
 fi
 
 if [[ $? != 0 ]]; then
