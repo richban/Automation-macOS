@@ -42,7 +42,7 @@ module.exports = {
     // http://mama.indstate.edu/users/ice/tree/
     'tree',
     // better, more recent vim
-    'vim --with-override-system-vi ----with-client-server',
+    'vim --with-override-system-vi --with-client-server',
     // http://osxdaily.com/2010/08/22/install-watch-command-on-os-x/
     'watch',
     // Install wget with IRI support
