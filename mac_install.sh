@@ -67,7 +67,7 @@ running "Installing additional SDK headers"
 sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /
 
 ###############################################################################
-bot "/etc/hosts"
+bot "/etc/hosts -- spyware/ad blocking"
 ###############################################################################
 
 read -r -p "Overwrite /etc/hosts with the ad-blocking hosts file from someonewhocares.org? (from ./configs/hosts file) [y|N] " response
@@ -262,8 +262,8 @@ ok "SpaceVim installed"
 bot "Powerline10k"
 ###############################################################################
 
-if [[ ! -d "./oh-my-zsh/custom/themes/powerlevel9k" ]]; then
-  git clone https://github.com/bhilburn/powerlevel9k.git oh-my-zsh/custom/themes/powerlevel9k
+if [[ ! -d "./oh-my-zsh/custom/themes/powerlevel10k" ]]; then
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
 fi
 
 ###############################################################################
