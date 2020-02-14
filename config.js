@@ -58,6 +58,8 @@ module.exports = {
     'redis',
     'pipenv',
     'graphviz',
+    // Mac App Store CLI
+    'mas',
     'yarn'
   ],
   cask: [
@@ -72,15 +74,14 @@ module.exports = {
     'spotify',
     'textmate',
     'sequel-pro',
-    'insomnia',
     'mactex'
   ],
-  gem: [
-  ],
+  gem: [],
   npm: [
     'eslint',
     'instant-markdown-d',
     'npm-check-updates',
     'prettyjson',
-  ]
+  ],
+  mas: []
 };
