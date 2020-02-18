@@ -74,7 +74,9 @@ module.exports = {
     'spotify',
     'textmate',
     'sequel-pro',
-    'mactex'
+    'mactex',
+    'tldr',
+    'shellcheck'
   ],
   gem: [],
   npm: [
