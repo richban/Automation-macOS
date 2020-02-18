@@ -33,7 +33,7 @@ if ! sudo grep -q "%wheel		ALL=(ALL) NOPASSWD: ALL #atomantic/dotfiles" "/etc/su
   if [[ $response =~ (yes|y|Y) ]];then
       sudo cp /etc/sudoers /etc/sudoers.back
       echo '%wheel		ALL=(ALL) NOPASSWD: ALL #atomantic/dotfiles' | sudo tee -a /etc/sudoers > /dev/null
-      sudo dscl . append /Groups/wheel GroupMembership $(whoami)
+      sudo dscl . append /Groups/wheel GroupMembership "$(whoami)"
       bot "You can now run sudo commands without password!"
   fi
 fi
@@ -166,15 +166,15 @@ require_brew git
 require_brew zsh
 # update ruby to latest
 # use versions of packages installed with homebrew
-RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl` --with-readline-dir=`brew --prefix readline` --with-libyaml-dir=`brew --prefix libyaml`"
+RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl) --with-readline-dir=$(brew --prefix readline) --with-libyaml-dir=$(brew --prefix libyaml)"
 require_brew ruby
 # set zsh as the user login shell
-CURRENTSHELL=$(dscl . -read /Users/$USER UserShell | awk '{print $2}')
+CURRENTSHELL=$(dscl . -read /Users/"$USER" UserShell | awk '{print $2}')
 if [[ "$CURRENTSHELL" != "/usr/local/bin/zsh" ]]; then
   bot "setting newer homebrew zsh (/usr/local/bin/zsh) as your shell (password required)"
   # sudo bash -c 'echo "/usr/local/bin/zsh" >> /etc/shells'
   # chsh -s /usr/local/bin/zsh
-  sudo dscl . -change /Users/$USER UserShell $SHELL /usr/local/bin/zsh > /dev/null 2>&1
+  sudo dscl . -change /Users/"$USER" UserShell "$SHELL" /usr/local/bin/zsh > /dev/null 2>&1
   ok
 fi
 
@@ -263,14 +263,14 @@ bot "Powerline10k"
 ###############################################################################
 
 if [[ ! -d "./oh-my-zsh/custom/themes/powerlevel10k" ]]; then
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$ZSH_CUSTOM"/themes/powerlevel10k
 fi
 
 ###############################################################################
 bot "tmux"
 ###############################################################################
 
-if [[ ! -d $HOME/.tmux ]]; then
+if [[ ! -d "$HOME"/.tmux ]]; then
   running "cloning tmux manager"
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
   ok
@@ -281,11 +281,11 @@ fi
 bot "Installing asdf"
 ###############################################################################
 
-if [[ ! -d $HOME/.asdf ]]; then
+if [[ ! -d "$HOME"/.asdf ]]; then
   action "installing .asdf"
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
-  echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bashrc
-  echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
+  echo -e "\n. $HOME/.asdf/asdf.sh" >> ~/.bashrc
+  echo -e "\n. $HOME/.asdf/completions/asdf.bash" >> ~/.bashrc
 fi
 
 if [[ $? != 0 ]]; then
@@ -298,8 +298,8 @@ bot "Installing Python 3.7.5"
 ###############################################################################
 
 action "installing python plugin"
-if [[ ! -d $HOME/.asdf/plugins/python ]]; then
-  $HOME/.asdf/bin/asdf plugin-add python https://github.com/danhper/asdf-python.git
+if [[ ! -d "$HOME"/.asdf/plugins/python ]]; then
+  "$HOME"/.asdf/bin/asdf plugin-add python https://github.com/danhper/asdf-python.git
 fi
 
 if [[ $? != 0 ]]; then
@@ -309,8 +309,8 @@ fi
 ok "python plugin succesfully added"
 
 action "installing python 3.7.5"
-if [[ ! -d $HOME/.asdf/installs/python ]]; then
-  $HOME/.asdf/bin/asdf install python 3.7.5
+if [[ ! -d "$HOME"/.asdf/installs/python ]]; then
+  "$HOME"/.asdf/bin/asdf install python 3.7.5
 fi
 
 if [[ $? != 0 ]]; then
@@ -319,7 +319,7 @@ fi
 
 ok "python 3.7.5 succesfully installed"
 
-$HOME/.asdf/bin/asdf global python 3.7.5
+"$HOME"/.asdf/bin/asdf global python 3.7.5
 if [[ $? != 0 ]]; then
   exit 2
 fi
@@ -340,13 +340,13 @@ bot ".dotfiles"
 read -r -p "Do you want me to install dotfiles? [y|N] " response
 if [[ $response =~ (yes|y|Y) ]];then
     bot "Installing dotfiles"
-    git clone --recursive git@github.com:richban/dotfiles.git $HOME/Developer/dotfiles
-    cd $HOME/Developer/dotfiles
+    git clone --recursive git@github.com:richban/dotfiles.git "$HOME"/Developer/dotfiles
+    cd "$HOME"/Developer/dotfiles || return
     action "installing dotdrop manager"
-    pip3 install --user -r $HOME/Developer/dotfiles/dotdrop/requirements.txt
+    pip3 install --user -r "$HOME"/Developer/dotfiles/dotdrop/requirements.txt
     action "installing dotfiles"
     read -r -p "Which profile wish you to install?" profile
-    ./dotdrop.sh install --profile=$profile
+    ./dotdrop.sh install --profile="$profile"
     ok
 fi
 
