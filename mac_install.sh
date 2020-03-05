@@ -206,13 +206,16 @@ ok
 ###############################################################################
 bot "oh-my-zsh"
 ###############################################################################
-running "installing oh-my-zsh"
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" > /dev/null 2>&1
-if [[ $? != 0 ]]; then
-	error "unable to install oh-my-zsh"
-	exit 2
+
+if [[ ! -d "./oh-my-zsh" ]]; then
+  running "installing oh-my-zsh"
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" > /dev/null 2>&1
+  if [[ $? != 0 ]]; then
+    error "unable to install oh-my-zsh"
+    exit 2
+  fi
+    ok "oh-my-zsh installed"
 fi
-  ok "oh-my-zsh installed"
 
 ###############################################################################
 bot "Installing Fonts"
@@ -241,8 +244,7 @@ fi
 bot "nvm and nodemon"
 ###############################################################################
 running "installing nvm"
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash 
 action "installing nodemon"
 npm install -g nodemon
 
@@ -250,13 +252,16 @@ npm install -g nodemon
 bot "SpaceVim"
 ###############################################################################
 
-running "installing SpaceVim"
-curl -sLf https://spacevim.org/install.sh | bash
-if [[ $? != 0 ]]; then
-  error "unable to install SpaceVim"
-  exit 2
+if [[ ! -d "$HOME"/.SpaceVim ]]; then
+  running "installing SpaceVim"
+  curl -sLf https://spacevim.org/install.sh | bash &>/dev/null &
+
+  if [[ $? != 0 ]]; then
+    error "unable to install SpaceVim"
+    exit 2
+  fi
+  ok "SpaceVim installed"
 fi
-ok "SpaceVim installed"
 
 ###############################################################################
 bot "Powerline10k"
@@ -274,6 +279,23 @@ if [[ ! -d "$HOME"/.tmux ]]; then
   running "cloning tmux manager"
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
   ok
+fi
+
+###############################################################################
+bot ".dotfiles"
+###############################################################################
+
+read -r -p "Do you want me to install dotfiles? [y|N] " response
+if [[ $response =~ (yes|y|Y) ]];then
+    bot "Installing dotfiles"
+    git clone --recursive git@github.com:richban/dotfiles.git "$HOME"/Developer/dotfiles
+    cd "$HOME"/Developer/dotfiles || return
+    action "installing dotdrop manager"
+    pip3 install --user -r "$HOME"/Developer/dotfiles/dotdrop/requirements.txt
+    action "installing dotfiles"
+    read -r -p "Which profile wish you to install?" profile
+    ./dotdrop.sh install --profile="$profile"
+    ok
 fi
 
 
@@ -333,22 +355,6 @@ bot "VSCODE"
 
 . "$CURRENT_DIR/shell/vscode.sh"
 
-###############################################################################
-bot ".dotfiles"
-###############################################################################
-
-read -r -p "Do you want me to install dotfiles? [y|N] " response
-if [[ $response =~ (yes|y|Y) ]];then
-    bot "Installing dotfiles"
-    git clone --recursive git@github.com:richban/dotfiles.git "$HOME"/Developer/dotfiles
-    cd "$HOME"/Developer/dotfiles || return
-    action "installing dotdrop manager"
-    pip3 install --user -r "$HOME"/Developer/dotfiles/dotdrop/requirements.txt
-    action "installing dotfiles"
-    read -r -p "Which profile wish you to install?" profile
-    ./dotdrop.sh install --profile="$profile"
-    ok
-fi
 
 ###############################################################################
 bot "configuring general system UI/UX..."
