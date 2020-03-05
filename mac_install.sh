@@ -207,7 +207,7 @@ ok
 bot "oh-my-zsh"
 ###############################################################################
 
-if [[ ! -d "./oh-my-zsh" ]]; then
+if [[ ! -d "$HOME"/.oh-my-zsh ]]; then
   running "installing oh-my-zsh"
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" > /dev/null 2>&1
   if [[ $? != 0 ]]; then
@@ -267,7 +267,7 @@ fi
 bot "Powerline10k"
 ###############################################################################
 
-if [[ ! -d "./oh-my-zsh/custom/themes/powerlevel10k" ]]; then
+if [[ ! -d "$ZSH_CUSTOM"/themes/powerlevel10k ]]; then
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$ZSH_CUSTOM"/themes/powerlevel10k
 fi
 
