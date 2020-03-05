@@ -283,7 +283,7 @@ bot "Installing asdf"
 
 if [[ ! -d "$HOME"/.asdf ]]; then
   action "installing .asdf"
-  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.3
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.7
   echo -e "\n. $HOME/.asdf/asdf.sh" >> ~/.bashrc
   echo -e "\n. $HOME/.asdf/completions/asdf.bash" >> ~/.bashrc
 fi

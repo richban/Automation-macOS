@@ -349,8 +349,8 @@ if [[ $res =~ (yes|y|Y) ]];then
 	defaults write com.apple.screensaver askForPassword -int 1
 	defaults write com.apple.screensaver askForPasswordDelay -int 0;ok
 
-	running "Save screenshots to the desktop"
-	defaults write com.apple.screencapture location -string "${HOME}/Desktop";ok
+	running "Save screenshots to the Pictures"
+	defaults write com.apple.screencapture location -string "${HOME}/Pictures";ok
 
 	running "Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)"
 	defaults write com.apple.screencapture type -string "png";ok
@@ -750,8 +750,8 @@ if [[ $res =~ (yes|y|Y) ]];then
 	bot "Messages"
 	###############################################################################
 
-	running "Disable automatic emoji substitution (i.e. use plain text smileys)"
-	defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false;ok
+	# running "Disable automatic emoji substitution (i.e. use plain text smileys)"
+	# defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false;ok
 
 	running "Disable smart quotes as it’s annoying for messages that contain code"
 	defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false;ok
@@ -764,7 +764,8 @@ if [[ $res =~ (yes|y|Y) ]];then
 	###############################################################################
 	bot "Kill affected applications"                                                  
 	###############################################################################
-	bot "OK. Note that some of these changes require a logout/restart to take effect. Killing affected applications (so they can reboot)...."
+	
+  bot "OK. Note that some of these changes require a logout/restart to take effect. Killing affected applications (so they can reboot)...."
 	for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
 		"Dock" "Finder" "Mail" "Messages" "Safari" "SizeUp" "SystemUIServer" \
 		"iCal" "Terminal"; do

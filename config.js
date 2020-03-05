@@ -50,7 +50,6 @@ module.exports = {
     // https://github.com/asdf-vm/asdf
     'asdf',
     // https://github.com/pypa/pipenv
-    'pipenv',
     'readline',
     'xz',
     'mysql@5.7',
@@ -58,8 +57,6 @@ module.exports = {
     'redis',
     'pipenv',
     'graphviz',
-    // Mac App Store CLI
-    'mas',
     'yarn'
   ],
   cask: [
@@ -72,9 +69,7 @@ module.exports = {
     'visual-studio-code',
     'xquartz',
     'spotify',
-    'textmate',
     'sequel-pro',
-    'mactex',
     'tldr',
     'shellcheck'
   ],
