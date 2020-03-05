@@ -267,12 +267,12 @@ fi
 bot "Powerline10k"
 ###############################################################################
 
-if [[ ! -d "$ZSH_CUSTOM"/themes/powerlevel10k ]]; then
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$ZSH_CUSTOM"/themes/powerlevel10k
+if [[ ! -d "$HOME"/.oh-my-zsh/themes/powerlevel10k ]]; then
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME"/.oh-my-zsh/themes/powerlevel10k
 fi
 
 ###############################################################################
-bot "tmux"
+bot "tmux plugin manager"
 ###############################################################################
 
 if [[ ! -d "$HOME"/.tmux ]]; then
