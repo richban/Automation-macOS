@@ -53,7 +53,7 @@ inquirer.prompt([{
       config[type].forEach((item)=>{
         tasks.push((cb)=>{
           console.info(type+':', item)
-          command('. lib_sh/echos.sh && . lib_sh/requirers.sh && require_'+type+' ' + item, __dirname, function(err, stdout, stderr) {
+          command('. shell/echos.sh && . shell/requirers.sh && require_'+type+' ' + item, __dirname, function(err, stdout, stderr) {
             if(err) console.error(emoji.get('fire'), err, stderr)
             cb()
           })
