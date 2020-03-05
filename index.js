@@ -2,7 +2,7 @@ const emoji = require('node-emoji')
 const fs = require('fs')
 const inquirer = require('inquirer')
 const config = require('./config')
-const command = require('./lib_node/command')
+const command = require('./command')
 const series = require('async.series')
 
 inquirer.prompt([{
