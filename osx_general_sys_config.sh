@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+source ./shell/echos.sh
+source ./shell/requirers.sh
+
 read -r -p "Do you want me to configure general System UI/UX [y|N] " res
 
 if [[ $res =~ (yes|y|Y) ]];then
@@ -493,8 +496,8 @@ if [[ $res =~ (yes|y|Y) ]];then
 	running "Remove the animation when hiding/showing the Dock"
 	defaults write com.apple.dock autohide-time-modifier -float 0;ok
 
-	running "Automatically hide and show the Dock"
-	defaults write com.apple.dock autohide -bool true;ok
+	# running "Automatically hide and show the Dock"
+	# defaults write com.apple.dock autohide -bool true;ok
 
 	# running "Make Dock icons of hidden applications translucent"
 	# defaults write com.apple.dock showhidden -bool true;ok
