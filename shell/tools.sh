@@ -2,26 +2,29 @@
 bot "Installing packages from node index.js"
 ###############################################################################
 
-require_brew nvm
+read -r -p "Install tools from config.js? [y|N] " response
+if [[ $response =~ (y|yes|Y) ]];then
+    require_brew nvm
 
-# nvm
-require_nvm stable
+    # nvm
+    require_nvm stable
 
-# always pin versions (no surprises, consistent dev/build machines)
-npm config set save-exact true
+    # always pin versions (no surprises, consistent dev/build machines)
+    npm config set save-exact true
 
-bot "installing npm tools needed to run this project..."
-npm install
-ok
+    bot "installing npm tools needed to run this project..."
+    npm install
+    ok
 
-bot "installing packages from config.js..."
-node index.js
-ok
+    bot "installing packages from config.js..."
+    node index.js
+    ok
 
-running "cleanup homebrew"
-brew cleanup --force > /dev/null 2>&1
-rm -f -r /Library/Caches/Homebrew/* > /dev/null 2>&1
-ok
+    running "cleanup homebrew"
+    brew cleanup --force > /dev/null 2>&1
+    rm -f -r /Library/Caches/Homebrew/* > /dev/null 2>&1
+    ok
+fi
 
 ###############################################################################
 bot "Installing Fonts"
