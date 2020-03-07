@@ -32,42 +32,44 @@ bot "Installing Fonts"
 
 read -r -p "Install fonts? [y|N] " response
 if [[ $response =~ (y|yes|Y) ]];then
-  bot "installing fonts"
-  # need fontconfig to install/build fonts
-  require_brew fontconfig
-  ./fonts/install.sh
-  brew tap homebrew/cask-fonts
-  require_cask font-fontawesome
-  require_cask font-awesome-terminal-fonts
-  require_cask font-hack
-  require_cask font-inconsolata-dz-for-powerline
-  require_cask font-inconsolata-g-for-powerline
-  require_cask font-inconsolata-for-powerline
-  require_cask font-roboto-mono
-  require_cask font-roboto-mono-for-powerline
-  require_cask font-source-code-pro
-  ok
+    bot "installing fonts"
+    # need fontconfig to install/build fonts
+    require_brew fontconfig
+    ./fonts/install.sh
+    brew tap homebrew/cask-fonts
+    require_cask font-fontawesome
+    require_cask font-awesome-terminal-fonts
+    require_cask font-hack
+    require_cask font-inconsolata-dz-for-powerline
+    require_cask font-inconsolata-g-for-powerline
+    require_cask font-inconsolata-for-powerline
+    require_cask font-roboto-mono
+    require_cask font-roboto-mono-for-powerline
+    require_cask font-source-code-pro
+    ok
 fi
 
 ###############################################################################
 bot "nvm and nodemon"
 ###############################################################################
-running "installing nvm"
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash 
-action "installing nodemon"
-npm install -g nodemon
 
+if [[ ! -d "$HOME"/.nvm ]]; then
+    running "installing nvm"
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash 
+    action "installing nodemon"
+    npm install -g nodemon
+fi
 ###############################################################################
 bot "oh-my-zsh"
 ###############################################################################
 
 if [[ ! -d "$HOME"/.oh-my-zsh ]]; then
-  running "installing oh-my-zsh"
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" > /dev/null 2>&1
-  if [[ $? != 0 ]]; then
+    running "installing oh-my-zsh"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" > /dev/null 2>&1
+    if [[ $? != 0 ]]; then
     error "unable to install oh-my-zsh"
     exit 2
-  fi
+    fi
     ok "oh-my-zsh installed"
 fi
 
@@ -76,14 +78,14 @@ bot "SpaceVim"
 ###############################################################################
 
 if [[ ! -d "$HOME"/.SpaceVim ]]; then
-  running "installing SpaceVim"
-  curl -sLf https://spacevim.org/install.sh | bash &>/dev/null &
+    running "installing SpaceVim"
+    curl -sLf https://spacevim.org/install.sh | bash &>/dev/null &
 
-  if [[ $? != 0 ]]; then
+    if [[ $? != 0 ]]; then
     error "unable to install SpaceVim"
     exit 2
-  fi
-  ok "SpaceVim installed"
+    fi
+    ok "SpaceVim installed"
 fi
 
 ###############################################################################
@@ -91,7 +93,7 @@ bot "Powerline10k"
 ###############################################################################
 
 if [[ ! -d "$HOME"/.oh-my-zsh/themes/powerlevel10k ]]; then
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME"/.oh-my-zsh/themes/powerlevel10k
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME"/.oh-my-zsh/themes/powerlevel10k
 fi
 
 ###############################################################################
@@ -99,9 +101,9 @@ bot "tmux plugin manager"
 ###############################################################################
 
 if [[ ! -d "$HOME"/.tmux ]]; then
-  running "cloning tmux manager"
-  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-  ok
+    running "cloning tmux manager"
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    ok
 fi
 
 ###############################################################################
@@ -109,10 +111,10 @@ bot "Installing asdf"
 ###############################################################################
 
 if [[ ! -d "$HOME"/.asdf ]]; then
-  action "installing .asdf"
-  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.7
-  echo -e "\n. $HOME/.asdf/asdf.sh" >> ~/.bashrc
-  echo -e "\n. $HOME/.asdf/completions/asdf.bash" >> ~/.bashrc
+    action "installing .asdf"
+    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.7
+    echo -e "\n. $HOME/.asdf/asdf.sh" >> ~/.bashrc
+    echo -e "\n. $HOME/.asdf/completions/asdf.bash" >> ~/.bashrc
 fi
 
 ###############################################################################
@@ -121,14 +123,14 @@ bot "Installing Python 3.7.5"
 
 action "installing python plugin"
 if [[ ! -d "$HOME"/.asdf/plugins/python ]]; then
-  "$HOME"/.asdf/bin/asdf plugin-add python https://github.com/danhper/asdf-python.git
+    "$HOME"/.asdf/bin/asdf plugin-add python https://github.com/danhper/asdf-python.git
 fi
 
 ok "python plugin succesfully added"
 
 action "installing python 3.7.5"
 if [[ ! -d "$HOME"/.asdf/installs/python ]]; then
-  "$HOME"/.asdf/bin/asdf install python 3.7.5
+    "$HOME"/.asdf/bin/asdf install python 3.7.5
 fi
 
 ok "python 3.7.5 succesfully installed"
