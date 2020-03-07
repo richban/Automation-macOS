@@ -2,9 +2,10 @@
 bot "Ask for the administrator password upfront"
 ###############################################################################
 
-if ! sudo grep -q "%wheel		ALL=(ALL) NOPASSWD: ALL #atomantic/dotfiles" "/etc/sudoers"; then
-  # Ask for the administrator password upfront
-  bot "I need you to enter your sudo password so I can install some things:"
+# Do we need to ask for sudo password or is it already passwordless?
+grep -q 'NOPASSWD:     ALL' /etc/sudoers.d/$LOGNAME > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo "no suder file"
   sudo -v
 
   # Keep-alive: update existing sudo time stamp until the script has finished
@@ -15,10 +16,11 @@ if ! sudo grep -q "%wheel		ALL=(ALL) NOPASSWD: ALL #atomantic/dotfiles" "/etc/su
   read -r -p "Make sudo passwordless? [y|N] " response
 
   if [[ $response =~ (yes|y|Y) ]];then
-      sudo cp /etc/sudoers /etc/sudoers.back
-      echo '%wheel		ALL=(ALL) NOPASSWD: ALL #atomantic/dotfiles' | sudo tee -a /etc/sudoers > /dev/null
-      sudo dscl . append /Groups/wheel GroupMembership "$(whoami)"
-      bot "You can now run sudo commands without password!"
+      if ! grep -q "#includedir /private/etc/sudoers.d" /etc/sudoers; then
+        echo '#includedir /private/etc/sudoers.d' | sudo tee -a /etc/sudoers > /dev/null
+      fi
+      echo -e "Defaults:$LOGNAME    !requiretty\n$LOGNAME ALL=(ALL) NOPASSWD:     ALL" | sudo tee /etc/sudoers.d/$LOGNAME
+      echo "You can now run sudo commands without password!"
   fi
 fi
 
@@ -29,7 +31,7 @@ bot "Change Host name"
 running "Do you want to change the hostname and computer name? [y|N] " response
 if [[ $response =~ (yes|y|Y) ]];then
 	action "changing hostname and computer name"
-    read -r -p "Type the new <hostname> :" hostname
+  read -r -p "Type the new <hostname> :" hostname
 	sudo scutil --set HostName hostname
 	read -r -p "Type the new local <hostname> :" localhostname
 	sudo scutil --set LocalHostName localhostname
@@ -37,7 +39,7 @@ if [[ $response =~ (yes|y|Y) ]];then
 	sudo scutil --set ComputerName computername
 	action "flushing DNS cache"
 	dscacheutil -flushcache
-    ok
+  ok
 fi
 
 ###############################################################################
