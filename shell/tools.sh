@@ -117,6 +117,12 @@ if [[ ! -d "$HOME"/.asdf ]]; then
     echo -e "\n. $HOME/.asdf/completions/asdf.bash" >> ~/.bashrc
 fi
 
+if [[ $? != 0 ]]; then
+    error "unable to install .asdf"
+else
+    ok "Succesfully Installed .asdf!"
+fi
+
 ###############################################################################
 bot "Installing Python 3.7.5"
 ###############################################################################
@@ -126,11 +132,19 @@ if [[ ! -d "$HOME"/.asdf/plugins/python ]]; then
     "$HOME"/.asdf/bin/asdf plugin-add python https://github.com/danhper/asdf-python.git
 fi
 
-ok "python plugin succesfully added"
+if [[ $? != 0 ]]; then
+    error "unable to .asdf python plugin"
+else
+    ok "Succesfully installed .asdf!"
+fi
 
 action "installing python 3.7.5"
 if [[ ! -d "$HOME"/.asdf/installs/python ]]; then
     "$HOME"/.asdf/bin/asdf install python 3.7.5
 fi
 
-ok "python 3.7.5 succesfully installed"
+if [[ $? != 0 ]]; then
+    error "unable to install python 3.7.5"
+else
+    ok "Succesfully installed python 3.7.5!"
+fi
