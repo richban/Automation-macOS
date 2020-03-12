@@ -1,3 +1,8 @@
+#!/usr/bin/env bash
+
+source echos.sh
+source requirers.sh
+
 ###############################################################################
 bot "Ask for the administrator password upfront"
 ###############################################################################
@@ -28,7 +33,7 @@ fi
 bot "Change Host name"
 ###############################################################################
 
-running "Do you want to change the hostname and computer name? [y|N] " response
+read -r -p "Do you want to change the hostname and computer name? [y|N] " response
 if [[ $response =~ (yes|y|Y) ]];then
 	action "changing hostname and computer name"
   read -r -p "Type the new <hostname> :" hostname
