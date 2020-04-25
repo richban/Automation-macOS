@@ -57,7 +57,8 @@ module.exports = {
     'redis',
     'pipenv',
     'graphviz',
-    'yarn'
+    'yarn',
+    'broot'
   ],
   cask: [
     'docker', // docker for mac
@@ -71,7 +72,8 @@ module.exports = {
     'spotify',
     'sequel-pro',
     'tldr',
-    'shellcheck'
+    'shellcheck',
+    'hammerspoon'
   ],
   gem: [],
   npm: [

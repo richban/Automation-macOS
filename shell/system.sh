@@ -36,11 +36,11 @@ bot "Change Host name"
 read -r -p "Do you want to change the hostname and computer name? [y|N] " response
 if [[ $response =~ (yes|y|Y) ]];then
 	action "changing hostname and computer name"
-  read -r -p "Type the new <hostname> :" hostname
+  read -r -p "Type the new <hostname>: " hostname
 	sudo scutil --set HostName hostname
-	read -r -p "Type the new local <hostname> :" localhostname
+	read -r -p "Type the new local <hostname>: " localhostname
 	sudo scutil --set LocalHostName localhostname
-	read -r -p "Type the new computer <name> :" computername
+	read -r -p "Type the new computer <name>: " computername
 	sudo scutil --set ComputerName computername
 	action "flushing DNS cache"
 	dscacheutil -flushcache
