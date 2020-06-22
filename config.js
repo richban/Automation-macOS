@@ -37,10 +37,6 @@ module.exports = {
     // better/more recent version of screen
     'homebrew/dupes/screen',
     'tmux',
-    // https://github.com/todotxt/todo.txt-cli
-    'todo-txt',
-    // http://mama.indstate.edu/users/ice/tree/
-    'tree',
     // better, more recent vim
     'vim --with-override-system-vi --with-client-server',
     // http://osxdaily.com/2010/08/22/install-watch-command-on-os-x/
@@ -58,19 +54,20 @@ module.exports = {
     'pipenv',
     'graphviz',
     'yarn',
-    'broot'
+    'broot',
+    'koekeishiya/formulae/yabai',
+    'koekeishiya/formulae/skhd',
+    'fd',
+    'exa'
   ],
   cask: [
     'docker', // docker for mac
-    'google-backup-and-sync',
     'google-chrome',
     'iterm2',
     'slack',
-    'the-unarchiver',
     'visual-studio-code',
     'xquartz',
     'spotify',
-    'sequel-pro',
     'tldr',
     'shellcheck',
     'hammerspoon'
